@@ -5,7 +5,7 @@ from functions import defaultdict2
 from agents import SarsaAgent
 
 class SarsaLambdaAgent(SarsaAgent):
-    def __init__(self, env, gamma=0.99, epsilon=0.1, alpha=0.5, lamb=0.9):
+    def __init__(self, env, policy, gamma=0.99, alpha=0.5, lamb=0.9):
         """
         Implementation of Sarsa(Lambda) in the tabular version, see
         http://incompleteideas.net/book/first/ebook/node77.html
@@ -16,12 +16,12 @@ class SarsaLambdaAgent(SarsaAgent):
         The constructor initializes e, the eligibility trace, as a datastructure similar to self.Q. I.e.
         self.e[s][a] is the eligibility trace e(s,a).
         """
-        super().__init__(env, gamma=gamma, alpha=alpha, epsilon=epsilon)
+        super().__init__(env, policy, gamma=gamma, alpha=alpha)
         self.lamb = lamb
         self.e = defaultdict2(self.Q.default_factory)
 
     def train(self, s, a, r, sp, done=False):
-        ap = self.pi_eps(s)
+        ap = self.pi(sp)
 
         # The ordinary Sarsa learning signal
         delta = r + self.gamma * self.Q[sp][ap] - self.Q[s][a]

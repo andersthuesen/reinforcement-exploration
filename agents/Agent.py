@@ -8,9 +8,10 @@ from functions import defaultdict2
 import warnings
 
 class Agent: 
-    def __init__(self, env, gamma=0.99, epsilon=0):
-        self.env, self.gamma, self.epsilon = env, gamma, epsilon 
+    def __init__(self, env, policy, gamma=0.99):
+        self.env, self.policy, self.gamma = env, policy, gamma
         self.Q = defaultdict2(lambda s: np.zeros(len(env.P[s]) if hasattr(env, 'P') and s in env.P else env.action_space.n))
+        
     def pi(self, s): 
         """ Should return the Agent's action in s (i.e. an element contained in env.action_space)"""
         raise NotImplementedError("return action") 
@@ -34,11 +35,6 @@ class Agent:
             return np.random.choice(list(self.env.P[s].keys()))
         else:
             return self.env.action_space.sample()
-
-    def pi_eps(self, s): 
-        """ Implement epsilon-greedy exploration. Return random action with probability self.epsilon,
-        else be greedy wrt. the Q-values. """
-        return self.random_pi(s) if np.random.rand() < self.epsilon else np.argmax(self.Q[s]+np.random.rand(len(self.Q[s]))*1e-8)
 
     def value(self, s):
         return np.max(self.Q[s])
