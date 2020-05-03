@@ -1,12 +1,8 @@
 """
 This file may not be shared/redistributed freely. Please read copyright notice in the git repo.
 """
-import sys
-sys.path.append(".")
-import gym
-from Functions import main_plot, savepdf, train, defaultdict2
-import matplotlib.pyplot as plt
-from Agent import SarsaAgent
+from functions import defaultdict2
+from agents import SarsaAgent
 
 class SarsaLambdaAgent(SarsaAgent):
     def __init__(self, env, gamma=0.99, epsilon=0.1, alpha=0.5, lamb=0.9):
@@ -45,51 +41,3 @@ class SarsaLambdaAgent(SarsaAgent):
 
     def __str__(self):
         return f"SarsaLambda_{self.gamma}_{self.epsilon}_{self.alpha}_{self.lamb}"
-
-if __name__ == "__main__":
-    envn = 'CliffWalking-v0'
-    env = gym.make(envn)
-
-    # methods = ["MC", "Q", "Sarsa"]
-    alpha =0.05
-    sarsaLagent = SarsaLambdaAgent(env,gamma=0.99, epsilon=0.1, alpha=alpha, lamb=0.9)
-    sarsa = SarsaAgent(env,gamma=0.99,alpha=alpha,epsilon=0.1)
-    methods = [("SarsaL", sarsaLagent), ("Sarsa", sarsa)]
-
-    experiments = []
-    for k, (name,agent) in enumerate(methods):
-        expn = f"experiments/{envn}_{name}"
-        train(env, agent, expn, num_episodes=500, max_runs=10)
-        experiments.append(expn)
-    main_plot(experiments, smoothing_window=10, resample_ticks=200)
-    plt.ylim([-100, 0])
-    savepdf("cliff_sarsa_lambda")
-    plt.show()
-
-
-"""
-class SarsaLambdaAgent(Agent):
-  def __init__(self, env, gamma, alpha, lambda):
-    super().__init__(self, env, gamma)
-    self.lambda = lambda
-    self.alpha = alpha
-    self.Q = None # Make Q function
-    self.z = None # Elegibility trace
-    self.w = ... # Test
-
-  def Q(self, s, a):
-    # Implement Q function here
-    pass
-
-  def pi(self, s):
-    pass
-
-  def train(self, s, a, r, sp, done=False):
-    #Q = self.w @ s
-    Q = self.w @ s
-    Q_prime = self.w @ sp
-    Q = Q + self.alpha * ((r + self.gamma * Q_prime) - Q)
-
-
-    pass
-"""

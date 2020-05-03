@@ -2,7 +2,6 @@
 This file may not be shared/redistributed freely. Please read copyright notice in the git repo.
 """
 import sys
-sys.path.append(".")
 import collections
 import inspect
 import types
@@ -263,38 +262,39 @@ def savepdf(pdf):
     Save command for generating figures.
     '''
     import matplotlib.pyplot as plt
-    pdf = pdf.strip()
-    pdf = pdf+".pdf" if not pdf.endswith(".pdf") else pdf
+    plt.savefig(pdf)
+    # pdf = pdf.strip()
+    # pdf = pdf+".pdf" if not pdf.endswith(".pdf") else pdf
 
-    frame = inspect.stack()[-1]
-    module = inspect.getmodule(frame[0])
-    filename = module.__file__
-    wd = os.path.dirname(filename)
-    pdf_dir = wd +"/pdf"
-    # print(inspect.stack())
-    # print("FILENAME: ", filename)
-    if filename.endswith("_RUN_OUTPUT_CAPTURE.py"):
-        return
-    if not os.path.isdir(pdf_dir):
-        os.mkdir(pdf_dir)
-    # print("PDF SAVE> ", wd)
-    if os.path.exists(os.getcwd()+ "/../../../Exercises") and os.path.exists(os.getcwd()+ "/../../../pdf_out"):
-        # figs = [os.path.join(wd, f"../../../Exercises/ExercisesPython/Exercise{i}/latex/output") for i in range(12)]
-        lecs = [os.path.join(wd, "../../../shared/output")]
-        od = lecs+[pdf_dir]
-        for f in od:
-            if not os.path.isdir(f):
-                os.makedirs(f)
+    # frame = inspect.stack()[-1]
+    # module = inspect.getmodule(frame[0])
+    # filename = module.__file__
+    # wd = os.path.dirname(filename)
+    # pdf_dir = wd +"/pdf"
+    # # print(inspect.stack())
+    # # print("FILENAME: ", filename)
+    # if filename.endswith("_RUN_OUTPUT_CAPTURE.py"):
+    #     return
+    # if not os.path.isdir(pdf_dir):
+    #     os.mkdir(pdf_dir)
+    # # print("PDF SAVE> ", wd)
+    # if os.path.exists(os.getcwd()+ "/../../../Exercises") and os.path.exists(os.getcwd()+ "/../../../pdf_out"):
+    #     # figs = [os.path.join(wd, f"../../../Exercises/ExercisesPython/Exercise{i}/latex/output") for i in range(12)]
+    #     lecs = [os.path.join(wd, "../../../shared/output")]
+    #     od = lecs+[pdf_dir]
+    #     for f in od:
+    #         if not os.path.isdir(f):
+    #             os.makedirs(f)
 
-        on = od[0] + "/" + pdf
-        plt.savefig(fname=on)
-        from thtools.slider import convert
-        convert.pdfcrop(on, fout=on)
-        for f in od[1:]:
-            shutil.copy(on, f +"/"+pdf)
-    else:
-        plt.savefig(fname=wd+"/"+pdf)
-    print(">", pdf)
+    #     on = od[0] + "/" + pdf
+    #     plt.savefig(fname=on)
+    #     from thtools.slider import convert
+    #     convert.pdfcrop(on, fout=on)
+    #     for f in od[1:]:
+    #         shutil.copy(on, f +"/"+pdf)
+    # else:
+    #     plt.savefig(fname=wd+"/"+pdf)
+    # print(">", pdf)
 
 def log_time_series(experiment, list_obs, max_xticks_to_log=None, run_name=None):
     logdir = f"{experiment}/"
