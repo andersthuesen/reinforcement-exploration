@@ -4,18 +4,8 @@ This file may not be shared/redistributed freely. Please read copyright notice i
 from functions import defaultdict2
 from agents import SarsaAgent
 
-class SarsaLambdaAgent(SarsaAgent):
+class BayesianSarsaLambdaAgent(SarsaAgent):
     def __init__(self, env, policy, gamma=0.99, alpha=0.5, lamb=0.9):
-        """
-        Implementation of Sarsa(Lambda) in the tabular version, see
-        http://incompleteideas.net/book/first/ebook/node77.html
-        for details (and note that as mentioned in the exercise description/lecture Sutton forgets to reset the
-        eligibility trace after each episode).
-        Note 'lamb' is an abbreveation of lambda, because lambda is a reserved keyword in python.
-
-        The constructor initializes e, the eligibility trace, as a datastructure similar to self.Q. I.e.
-        self.e[s][a] is the eligibility trace e(s,a).
-        """
         super().__init__(env, policy, gamma=gamma, alpha=alpha)
         self.lamb = lamb
         self.e = defaultdict2(self.Q.default_factory)
@@ -40,4 +30,4 @@ class SarsaLambdaAgent(SarsaAgent):
             self.t += 1
 
     def __str__(self):
-        return f"SarsaLambda_{self.policy}_{self.gamma}_{self.alpha}_{self.lamb}"
+        return f"BayesianSarsaLambda_{self.policy}_{self.gamma}_{self.alpha}_{self.lamb}"

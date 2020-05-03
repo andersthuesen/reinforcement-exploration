@@ -4,4 +4,7 @@ class Policy:
 
   def pi(self, Q, s):
     pass
+
+  def __str__(self):
+    return "policy"
   

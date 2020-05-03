@@ -23,3 +23,6 @@ class EpsilonGreedy(Policy):
     else:
       # Return greedy action
       return action_keys[np.argmax([mean for mean, std in actions.values()])]
+
+  def __str__(self):
+    return f"epsilon-greedy-{self.epsilon}"
