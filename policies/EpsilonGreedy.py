@@ -17,8 +17,9 @@ class EpsilonGreedy(Policy):
       }
     """
     actions = Q(s)
+    action_keys = list(actions.keys())
     if np.random.rand() < self.epsilon:
-      return np.random.choice([key for key in actions.keys()])
+      return np.random.choice(action_keys)
     else:
       # Return greedy action
-      return np.argmax([mean for mean, std in actions.values()])
+      return action_keys[np.argmax([mean for mean, std in actions.values()])]
