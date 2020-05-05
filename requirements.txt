@@ -1,2 +1,4 @@
 gym
 gym-minigrid
+pyro-ppl
+pytorch
