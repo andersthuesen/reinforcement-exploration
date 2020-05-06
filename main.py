@@ -8,7 +8,7 @@ from policies import EpsilonGreedy
 if __name__ == "__main__":
     envn = "MiniGrid-Empty-5x5-v0" # "CliffWalking-v0"
     env = gym.make(envn)
-    env = OneHotPartialObsWrapper(env)
+    #env = OneHotPartialObsWrapper(env)
     alpha = 0.05
     policy = EpsilonGreedy(epsilon=0.1)
     bayesianSarsaLambda = BayesianSarsaLambdaAgent(env, policy)
