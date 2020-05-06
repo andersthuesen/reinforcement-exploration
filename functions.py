@@ -367,5 +367,33 @@ def train(env, agent, experiment_name=None, num_episodes=None, verbose=True, res
         print(f"Training completed. Logging: '{', '.join( stats[0].keys()) }' to {experiment_name}")
     return experiment_name, stats, done
 
+def cache_write(object, file_name, only_on_professors_computer=False):
+    if only_on_professors_computer and not is_this_my_computer():
+        """ Probably for your own good :-). """
+        return
+    # file_name = cn_(file_name) if cache_prefix else file_name
+    dn = os.path.dirname(file_name)
+    if not os.path.exists(dn):
+        os.mkdir(dn)
+    print("Writing cache...", file_name)
+    with open(file_name, 'wb', ) as f:
+        compress_pickle.dump(object, f, compression="lzma")
+    print("Done!")
+
+
+def cache_exists(file_name, cache_prefix=True):
+    # file_name = cn_(file_name) if cache_prefix else file_name
+    return os.path.exists(file_name)
+
+
+def cache_read(file_name, cache_prefix=True):
+    # file_name = cn_(file_name) if cache_prefix else file_name
+    if os.path.exists(file_name):
+        with open(file_name, 'rb') as f:
+            return compress_pickle.load(f, compression="lzma")
+            # return pickle.load(f)
+    else:
+        return None
+
 
 
