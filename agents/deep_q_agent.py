@@ -7,7 +7,7 @@ import gym
 import numpy as np
 import os
 from matplotlib import pyplot as plt
-import Agent
+from agents import Agent
 from functions import train, savepdf, cache_write, cache_read, cache_exists
 from Torch import BasicBuffer
 from Torch import TorchNetwork as QNetwork  # Torch network architechture
