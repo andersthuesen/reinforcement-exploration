@@ -35,7 +35,7 @@ class DeepQNetwork(nn.Module, Network):
 
     def build_model_(self):
         num_actions = self.env.action_space.n
-        self.model = nn.Sequential(*self.build_feature_network(), nn.Linear(self.hidden,num_actions))
+        self.model = nn.Sequential(*self.build_feature_network(), nn.Linear(self.hidden, num_actions))
 
     def forward(self, s):
         s = Variable(torch.FloatTensor(s))
