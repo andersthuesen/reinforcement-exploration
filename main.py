@@ -4,8 +4,8 @@ from gym_minigrid.wrappers import *
 from functions import main_plot, savepdf, train, defaultdict2
 
 from policies import EpsilonGreedy, EpsilonUCB, EpsilonMaxVariance
-from networks import EnsambleNetwork, DeepQNetwork, BayesianDeepQNetwork
-from agents import SarsaLambdaAgent, SarsaAgent, BayesianSarsaLambdaAgent, DeepQAgent
+from networks import EnsambleNetwork, DeepQNetwork
+from agents import SarsaLambdaAgent, SarsaAgent, DeepQAgent
 from wrappers import OneHotWrapper
 
 if __name__ == "__main__":
