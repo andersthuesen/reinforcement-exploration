@@ -43,7 +43,7 @@ class DeepQNetwork(nn.Module, Network):
         return s
 
     def __call__(self, s):
-        out = self.forward(s).detach().numpy()
+        out = self.forward(s).detach().cpu().numpy()
         # return mean and std. As we have no estimate of std, return 0.
         return out, np.zeros_like(out)
 
