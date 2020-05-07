@@ -1,0 +1,3 @@
+from networks.Network import Network
+from networks.DeepQNetwork import DeepQNetwork
+from networks.BayesianDeepQNetwork import BayesianDeepQNetwork

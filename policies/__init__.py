@@ -1,2 +1,3 @@
 from policies.Policy import Policy
 from policies.EpsilonGreedy import EpsilonGreedy
+from policies.EpsilonExpectedImprovement import EpsilonExpectedImprovement

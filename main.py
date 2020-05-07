@@ -2,8 +2,10 @@ import gym
 import matplotlib.pyplot as plt
 from gym_minigrid.wrappers import *
 from functions import main_plot, savepdf, train, defaultdict2
-from agents import SarsaLambdaAgent, SarsaAgent, BayesianSarsaLambdaAgent
+
 from policies import EpsilonGreedy
+from networks import DeepQNetwork
+from agents import SarsaLambdaAgent, SarsaAgent, BayesianSarsaLambdaAgent, DeepQAgent
 
 if __name__ == "__main__":
     envn = "MiniGrid-Empty-5x5-v0" # "CliffWalking-v0"
@@ -11,8 +13,12 @@ if __name__ == "__main__":
     #env = OneHotPartialObsWrapper(env)
     alpha = 0.05
     policy = EpsilonGreedy(epsilon=0.1)
-    bayesianSarsaLambda = BayesianSarsaLambdaAgent(env, policy)
-    methods = [("BayesianSarsaL", bayesianSarsaLambda)]
+    network = DeepQNetwork
+    deepQAgent = DeepQAgent(env, policy, network=network)
+    methods = [("DQN", deepQAgent)]
+
+    #bayesianSarsaLambda = BayesianSarsaLambdaAgent(env, policy)
+    #methods = [("BayesianSarsaL", bayesianSarsaLambda)]
     #sarsaLagent = SarsaLambdaAgent(env, policy, gamma=0.99, alpha=alpha, lamb=0.9)
     #sarsa = SarsaAgent(env, policy, gamma=0.99, alpha=alpha)
     #methods = [("SarsaL", sarsaLagent), ("Sarsa", sarsa)]

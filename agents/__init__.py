@@ -3,3 +3,4 @@ from agents.QAgent import QAgent
 from agents.SarsaAgent import SarsaAgent
 from agents.SarsaLambdaAgent import SarsaLambdaAgent
 from agents.BayesianSarsaLambdaAgent import BayesianSarsaLambdaAgent
+from agents.DeepQAgent import DeepQAgent
