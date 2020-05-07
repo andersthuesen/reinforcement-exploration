@@ -45,5 +45,5 @@ if __name__ == "__main__":
         experiments.append(expn)
 
     main_plot(experiments,  smoothing_window=10)
-    savepdf("./cliff_sarsa_lambda")
+    savepdf("./results")
     plt.show()
