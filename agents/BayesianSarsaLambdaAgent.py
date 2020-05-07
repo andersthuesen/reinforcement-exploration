@@ -14,13 +14,10 @@ class BayesianSarsaLambdaAgent(Agent):
     def pi(self, s):
       image = s["image"]
       X = torch.tensor(image.flatten()).view((1, -1))
-      #print(X)
 
       return 0
 
     def train(self, s, a, r, sp, done=False):
-      # Test
-      #print("train", s, a, r, sp)
       pass
       
     def __str__(self):

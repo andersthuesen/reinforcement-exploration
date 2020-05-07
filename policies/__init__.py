@@ -1,3 +1,4 @@
 from policies.Policy import Policy
 from policies.EpsilonGreedy import EpsilonGreedy
-from policies.EpsilonExpectedImprovement import EpsilonExpectedImprovement
+from policies.EpsilonMaxVariance import EpsilonMaxVariance
+from policies.EpsilonUCB import EpsilonUCB

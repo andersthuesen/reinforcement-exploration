@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 from gym_minigrid.wrappers import *
 from functions import main_plot, savepdf, train, defaultdict2
 
-from policies import EpsilonGreedy
+from policies import EpsilonGreedy, EpsilonUCB, EpsilonMaxVariance
 from networks import EnsambleNetwork, DeepQNetwork, BayesianDeepQNetwork
 from agents import SarsaLambdaAgent, SarsaAgent, BayesianSarsaLambdaAgent, DeepQAgent
 from wrappers import OneHotWrapper
@@ -23,20 +23,27 @@ if __name__ == "__main__":
     }
 
     policy = EpsilonGreedy(epsilon=0.1)
-    network = lambda *args, **kwargs: EnsambleNetwork([DeepQNetwork] * 2, *args, **kwargs)
-    EnsambleDeepQAgent = DeepQAgent(env, policy, network=network, **deepQAgentArgs)
-    methods.append(("EnsambleDQN", EnsambleDeepQAgent))
-
-    policy = EpsilonGreedy(epsilon=0.1)
     network = DeepQNetwork
-    deepQAgent = DeepQAgent(env, policy, network=network, **deepQAgentArgs)
-    methods.append(("DQN", EnsambleDeepQAgent))
+    DQNAgent = DeepQAgent(env, policy, network=network, **deepQAgentArgs)
+    methods.append(("DQN", DQNAgent))
+
+    policy = EpsilonUCB(epsilon=0.1, c=1)
+    network = lambda *args, **kwargs: EnsambleNetwork([DeepQNetwork] * 10, *args, **kwargs)
+    DQNAgentUCB = DeepQAgent(env, policy, network=network, **deepQAgentArgs)
+    methods.append(("DQN-UCB", DQNAgentUCB))
+
+    policy = EpsilonMaxVariance(epsilon=0.1)
+    network = lambda *args, **kwargs: EnsambleNetwork([DeepQNetwork] * 10, *args, **kwargs)
+    DQNAgentMV = DeepQAgent(env, policy, network=network, **deepQAgentArgs)
+    methods.append(("DQN-MV", DQNAgentMV))
 
     experiments = []
     for k, (name, agent) in enumerate(methods):
         expn = f"experiments/{envn}_{name}"
-        train(env, agent, expn, num_episodes=200)
+        for i in range(10):
+            train(env, agent, expn, num_episodes=200)
         experiments.append(expn)
-    main_plot(experiments, units="Unit", estimator=None, smoothing_window=None)
+
+    main_plot(experiments,  smoothing_window=10)
     savepdf("./cliff_sarsa_lambda")
     plt.show()

@@ -4,7 +4,6 @@ from networks import Network
 class EnsambleNetwork(Network):
     def __init__(self, networks, *args, **kwargs):
         Network.__init__(self)
-        print(args, kwargs)
         self.networks = [
           Network(*args, **kwargs)
           for Network in networks

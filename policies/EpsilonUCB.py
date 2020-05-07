@@ -5,7 +5,7 @@ class EpsilonUCB(Policy):
   def __init__(self, epsilon, c):
     super().__init__()
     self.epsilon = epsilon
-    self.c
+    self.c = c
 
   def pi(self, Q, s):
     actions = Q(s)
