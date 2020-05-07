@@ -49,7 +49,8 @@ class DeepQNetwork(nn.Module, Network):
 
     def fit(self, s, target):
         q_value = self.forward(s)
-        loss = (q_value - torch.FloatTensor(target).detach()).pow(2).sum(axis=1).mean()
+        target = Variable(torch.FloatTensor(target))
+        loss = (q_value - target).pow(2).sum(axis=1).mean()
         self.optimizer.zero_grad()
         loss.backward()
         self.optimizer.step()
