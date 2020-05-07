@@ -13,7 +13,7 @@ class DeepQAgent(Agent):
         self.steps, self.episodes = 0, 0
 
     def pi(self, s):
-        return self.policy.pi(lambda s: { a: (q, 0) for a, q in enumerate(self.Q(s)) }, s)
+        return self.policy.pi(lambda s: { a: q for a, q in enumerate(zip(*self.Q(s))) }, s)
 
     def train(self, s, a, r, sp, done=False):
         self.memory.push(s, a, r, sp, done) # save current observation 
@@ -40,8 +40,9 @@ class DeepQAgent(Agent):
         for instance 'a' will be of dimension [self.batch_size x 1]. 
         """
         s, a, r, sp, done = self.memory.sample(self.batch_size) 
-        target = self.Q(s)
-        target[np.arange(self.batch_size), a] = r.squeeze() + self.gamma * np.max(self.Q(sp), axis=1) * (1 - done)
+        target, _ = self.Q(s)
+        Q_sp, _ = self.Q(sp)
+        target[np.arange(self.batch_size), a] = r.squeeze() + self.gamma * np.max(Q_sp, axis=1) * (1 - done)
         self.Q.fit(s, target)
 
     def __str__(self):

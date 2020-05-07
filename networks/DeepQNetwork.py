@@ -43,7 +43,9 @@ class DeepQNetwork(nn.Module, Network):
         return s
 
     def __call__(self, s):
-        return self.forward(s).detach().numpy()
+        out = self.forward(s).detach().numpy()
+        # return mean and std. As we have no estimate of std, return 0.
+        return out, np.zeros_like(out)
 
     def fit(self, s, target):
         q_value = self.forward(s)
