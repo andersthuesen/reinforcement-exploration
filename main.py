@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 from gym_minigrid.wrappers import *
 from functions import main_plot, savepdf, train, defaultdict2
 
-from policies import EpsilonGreedy, EpsilonUCB, EpsilonMaxVariance
+from policies import EpsilonGreedy, EpsilonMaxOpportunity, EpsilonMaxVariance
 from networks import EnsambleNetwork, DeepQNetwork
 from agents import SarsaLambdaAgent, SarsaAgent, DeepQAgent
 from wrappers import OneHotWrapper
@@ -27,10 +27,10 @@ if __name__ == "__main__":
     DQNAgent = lambda: DeepQAgent(env, policy, network=network, **deepQAgentArgs)
     methods.append(("DQN", DQNAgent))
 
-    policy = EpsilonUCB(epsilon=0.1, c=1)
+    policy = EpsilonMaxOpportunity(epsilon=0.1, c=1)
     network = lambda *args, **kwargs: EnsambleNetwork([DeepQNetwork] * 10, *args, **kwargs)
-    DQNAgentUCB = lambda: DeepQAgent(env, policy, network=network, **deepQAgentArgs)
-    methods.append(("DQN-UCB", DQNAgentUCB))
+    DQNAgentMO = lambda: DeepQAgent(env, policy, network=network, **deepQAgentArgs)
+    methods.append(("DQN-MO", DQNAgentMO))
 
     policy = EpsilonMaxVariance(epsilon=0.1)
     network = lambda *args, **kwargs: EnsambleNetwork([DeepQNetwork] * 10, *args, **kwargs)
@@ -40,8 +40,8 @@ if __name__ == "__main__":
     experiments = []
     for k, (name, agent) in enumerate(methods):
         expn = f"experiments/{envn}_{name}"
-        for i in range(10):
-            train(env, agent(), expn, num_episodes=200)
+        #for i in range(10):
+            #train(env, agent(), expn, num_episodes=200)
         experiments.append(expn)
 
     main_plot(experiments,  smoothing_window=10)

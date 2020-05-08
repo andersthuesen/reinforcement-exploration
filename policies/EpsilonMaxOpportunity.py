@@ -1,7 +1,7 @@
 import numpy as np
 from policies import Policy
 
-class EpsilonUCB(Policy):
+class EpsilonMaxOpportunity(Policy):
   def __init__(self, epsilon, c):
     super().__init__()
     self.epsilon = epsilon
@@ -17,4 +17,4 @@ class EpsilonUCB(Policy):
       return action_keys[np.argmax([mean for mean, std in actions.values()])]
 
   def __str__(self):
-    return f"epsilon-expected-improvement-{self.epsilon}"
+    return f"epsilon-maximum-oppertunity-{self.epsilon}"
